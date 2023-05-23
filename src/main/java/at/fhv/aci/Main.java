@@ -9,12 +9,14 @@ import at.fhv.aci.graph.types.ObjectGraph;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
         // traverse();
-        dijkstra();
-        prim();
+        // dijkstra();
+        // prim();
+        kruskal();
     }
 
     private static void traverse() {
@@ -142,5 +144,68 @@ public class Main {
         Map<Node, Node> spanningTree = prim.prim();
         System.out.println("### End Prim ###");
 
+    }
+
+    private static void kruskal() {
+        Graph graph = new Graph(GraphType.OBJECT_GRAPH);
+
+        Node a = new Node("A");
+        Node b = new Node("B");
+        Node c = new Node("C");
+        Node d = new Node("D");
+        Node e = new Node("E");
+        Node f = new Node("F");
+        Node g = new Node("G");
+        Node h = new Node("H");
+        Node i = new Node("I");
+
+        graph.addNode(a);
+        graph.addNode(b);
+        graph.addNode(c);
+        graph.addNode(d);
+        graph.addNode(e);
+        graph.addNode(f);
+        graph.addNode(g);
+        graph.addNode(h);
+        graph.addNode(i);
+
+        graph.addEdge(a, b, 1);
+        graph.addEdge(a, d, 2);
+
+        graph.addEdge(b, a, 1);
+        graph.addEdge(b, c, 12);
+        graph.addEdge(b, e, 4);
+
+        graph.addEdge(c, b, 12);
+        graph.addEdge(c, f, 9);
+
+        graph.addEdge(d, a, 2);
+        graph.addEdge(d, e, 6);
+        graph.addEdge(d, g, 19);
+
+        graph.addEdge(e, b, 4);
+        graph.addEdge(e, d, 6);
+        graph.addEdge(e, f, 11);
+        graph.addEdge(e, h, 17);
+
+        graph.addEdge(f, c, 9);
+        graph.addEdge(f, e, 11);
+        graph.addEdge(f, i, 28);
+
+        graph.addEdge(g, d, 19);
+        graph.addEdge(g, h, 13);
+
+        graph.addEdge(h, g, 13);
+        graph.addEdge(h, e, 17);
+        graph.addEdge(h, i, 22);
+
+        graph.addEdge(i, f, 28);
+        graph.addEdge(i, h, 22);
+
+        Kruskal kruskal = new Kruskal(graph);
+        Set<Edge> spanningTree = kruskal.kruskal();
+//      spanningTree.forEach(edge -> System.out.println(edge));
+        System.out.println("Graph Nodes Size = " + graph.getNodes().size());
+        System.out.println("SpanningTree size = " + spanningTree.size());
     }
 }

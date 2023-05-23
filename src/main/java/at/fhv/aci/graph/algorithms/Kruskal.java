@@ -13,7 +13,7 @@ public class Kruskal {
         _graph = graph;
     }
 
-    public void kruskal() {
+    public Set<Edge> kruskal() {
         Set<Edge> spanningTree = new HashSet<>();
 
         // vergleicht Kanten nach Gewicht
@@ -38,13 +38,18 @@ public class Kruskal {
         while (spanningTree.size() < _graph.getNodes().size()) {
             // nimm die erste Kante aus der Queue
             Edge e = edges.poll();
-            // Überprüfe ob die Knoten am Kantenende disjunkt sind
-            if (isDisjoint(e, nodeSetList)) {
-                // wenn ja, füge Kante zur besuchten Kanten hinzu
-                spanningTree.add(e);
-                joinTrees(nodeSetList, e.getNodes()[0], e.getNodes()[1]);
+            // Überprüfe ob Kante schon im SpanningTree ist
+            if (!spanningTree.contains(e)) {
+                // Überprüfe ob die Knoten am Kantenende disjunkt sind
+                if (isDisjoint(e, nodeSetList)) {
+                    // wenn ja, füge Kante zur besuchten Kanten hinzu
+                    spanningTree.add(e);
+                    joinTrees(nodeSetList, e.getNodes()[0], e.getNodes()[1]);
+                }
             }
         }
+
+        return spanningTree;
     }
 
     private void joinTrees(List<Set<Node>> nodeSetList, Node firstNode, Node secondNode) {
@@ -89,8 +94,8 @@ public class Kruskal {
         return isDisjoint;
     }
 
-    private List<Edge> getAllEdges() {
-        List<Edge> edges = new ArrayList<>();
+    private Set<Edge> getAllEdges() {
+        Set<Edge> edges = new HashSet<>();
 
         _graph.getNodes().forEach(node -> node.getEdges().forEach(edge -> edges.add(edge)));
 

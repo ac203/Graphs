@@ -27,8 +27,11 @@ public class Edge {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Edge edge = (Edge) o;
-        return _weight == edge._weight && (_nodes[0].equals(edge.getNodes()[0]) && _nodes[1].equals(edge.getNodes()[1])) ||
-                (_nodes[0].equals(edge.getNodes()[1]) && _nodes[1].equals(edge.getNodes()[0]));
+        Node firstNode = edge.getNodes()[0];
+        Node secondNode = edge.getNodes()[0];
+
+        return _weight == edge._weight && (_nodes[0].equals(firstNode) && _nodes[1].equals(secondNode) ||
+                (_nodes[0].equals(secondNode) && _nodes[1].equals(firstNode)));
     }
 
     @Override
