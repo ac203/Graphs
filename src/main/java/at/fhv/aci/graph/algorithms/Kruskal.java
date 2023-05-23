@@ -48,18 +48,32 @@ public class Kruskal {
     }
 
     private void joinTrees(List<Set<Node>> nodeSetList, Node firstNode, Node secondNode) {
-        for (Set<Node> nodeSet : nodeSetList) {
-            // vereinige beide Knoten zu einem Set
-            if (nodeSet.contains(firstNode)) {
-                nodeSet.add(secondNode);
-                // lösche das Set mit dem anderen Knoten
-            }
+        // Platzhalter für Set vom ersten Node
+        Set<Node> firstNodeSet = new HashSet<>();
+        // Platzhalter für Set vom ersten Node
+        Set<Node> secondNodeSet = new HashSet<>();
 
-            if (nodeSet.contains(secondNode) && nodeSet.size() == 1) {
-                nodeSetList.remove(nodeSet);
+        // Finde eigenständige Sets und speichere sie
+        for (Set<Node> nodeSet : nodeSetList) {
+            if (nodeSet.contains(firstNode)) {
+                firstNodeSet.add(firstNode);
+            }
+            if (nodeSet.contains(secondNode)) {
+                secondNodeSet.add(secondNode);
             }
         }
+
+        // Lösche eigenständige Sets aus bestehender Liste
+        nodeSetList.remove(firstNodeSet);
+        nodeSetList.remove(secondNodeSet);
+
+        // Vereinige beide Sets
+        firstNodeSet.addAll(secondNodeSet);
+
+        // Füge Set wieder in die Liste hinzu
+        nodeSetList.add(firstNodeSet);
     }
+
     private boolean isDisjoint(Edge edge, List<Set<Node>> nodeSetList) {
         Node firstNode = edge.getNodes()[0];
         Node secondNode = edge.getNodes()[1];
